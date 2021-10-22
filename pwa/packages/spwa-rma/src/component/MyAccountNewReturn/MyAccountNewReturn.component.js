@@ -26,71 +26,27 @@ export class MyAccountNewReturnComponent extends PureComponent {
     static propTypes = {
         shippingAddress: PropTypes.object,
         reasonData: PropTypes.object.isRequired,
-        onNewRequestSubmit: PropTypes.func.isRequired,
         orderId: PropTypes.string.isRequired,
         history: PropTypes.object.isRequired,
         isLoading: PropTypes.bool.isRequired,
         renderPageTitle: PropTypes.func.isRequired,
         items: PropTypes.array.isRequired,
-        createdAt: PropTypes.string.isRequired
+        createdAt: PropTypes.string.isRequired,
+        messageText: PropTypes.string.isRequired,
+        hasItemsError: PropTypes.bool.isRequired,
+        handleSelectedItemsChange: PropTypes.func.isRequired,
+        handleTextAreaChange: PropTypes.func.isRequired,
+        handleRequestSubmitPress: PropTypes.func.isRequired,
+        isButtonEnabled: PropTypes.func.isRequired,
+        handleBackPress: PropTypes.func.isRequired
     };
 
     static defaultProps = {
         shippingAddress: {}
     };
 
-    state = {
-        selectedItems: {},
-        hasItemsError: false,
-        messageText: ''
-    };
-
-    handleSelectedItemsChange = (selectedItems) => {
-        this.setState({ selectedItems });
-    };
-
-    handleRequestSubmitPress = async () => {
-        const { orderId, onNewRequestSubmit } = this.props;
-        const { selectedItems, messageText } = this.state;
-
-        if (!Object.keys(selectedItems).length) {
-            return;
-        }
-
-        const isAllFilled = !Object.values(selectedItems).find((selectedItem) => (
-            Object.values(selectedItem).find((item) => !item) !== undefined
-        ));
-
-        if (!isAllFilled) {
-            this.setState({ hasItemsError: true });
-            return;
-        }
-
-        onNewRequestSubmit({
-            items: selectedItems,
-            order_id: orderId,
-            message: messageText
-        });
-    };
-
-    handleBackPress = () => {
-        const { history } = this.props;
-
-        history.goBack();
-    };
-
-    handleTextAreaChange = (value) => {
-        this.setState({ messageText: value });
-    };
-
-    isButtonEnabled() {
-        const { selectedItems } = this.state;
-        const isSubmitDisabled = !Object.keys(selectedItems).length;
-
-        return isSubmitDisabled;
-    }
-
     renderActions() {
+        const { handleBackPress, handleRequestSubmitPress, isButtonEnabled } = this.props;
         return (
             <div
               block="MyAccountNewReturn"
@@ -98,15 +54,15 @@ export class MyAccountNewReturnComponent extends PureComponent {
             >
                 <button
                   block="Button"
-                  onClick={ this.handleRequestSubmitPress }
-                  disabled={ this.isButtonEnabled() }
+                  onClick={ handleRequestSubmitPress }
+                  disabled={ isButtonEnabled() }
                 >
                     { __('Submit request') }
                 </button>
                 <button
                   block="Button"
                   mods={ { isHollow: true } }
-                  onClick={ this.handleBackPress }
+                  onClick={ handleBackPress }
                 >
                     { __('Cancel') }
                 </button>
@@ -120,7 +76,7 @@ export class MyAccountNewReturnComponent extends PureComponent {
     }
 
     renderMessageTextArea() {
-        const { messageText } = this.state;
+        const { handleTextAreaChange, messageText } = this.props;
 
         return (
             <Field
@@ -133,7 +89,7 @@ export class MyAccountNewReturnComponent extends PureComponent {
                   elem: 'MessageTextArea'
               } }
               value={ messageText }
-              onChange={ this.handleTextAreaChange }
+              onChange={ handleTextAreaChange }
             />
         );
     }
@@ -159,9 +115,10 @@ export class MyAccountNewReturnComponent extends PureComponent {
             createdAt,
             renderPageTitle,
             orderId = '',
-            shippingAddress
+            shippingAddress,
+            handleSelectedItemsChange,
+            hasItemsError
         } = this.props;
-        const { hasItemsError } = this.state;
 
         return (
             <div block="MyAccountNewReturn">
@@ -175,7 +132,7 @@ export class MyAccountNewReturnComponent extends PureComponent {
                     <MyAccountNewReturnAddressTable address={ shippingAddress } />
                 </div>
                 <MyAccountNewReturnItemSelect
-                  onItemChange={ this.handleSelectedItemsChange }
+                  onItemChange={ handleSelectedItemsChange }
                   reasonData={ reasonData }
                   items={ items }
                   hasError={ hasItemsError }

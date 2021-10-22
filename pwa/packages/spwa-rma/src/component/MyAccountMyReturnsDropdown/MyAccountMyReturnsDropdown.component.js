@@ -22,7 +22,6 @@ export class MyAccountMyReturnsDropdownComponent extends PureComponent {
 
     static propTypes = {
         selectOptions: PropTypes.array,
-        setChosenOrderId: PropTypes.func.isRequired,
         onSelectChange: PropTypes.func.isRequired
     };
 
@@ -31,18 +30,18 @@ export class MyAccountMyReturnsDropdownComponent extends PureComponent {
     };
 
     onDropdownChange = (value) => {
-        const { setChosenOrderId, onSelectChange } = this.props;
+        const { onSelectChange } = this.props;
 
         this.setState(
             () => ({
                 selectValue: value,
                 selectValueText: this.getSelectValueText(value)
-            }),
-            () => setChosenOrderId(value)
+            })
         );
         onSelectChange(value);
     };
 
+    // eslint-disable-next-line @scandipwa/scandipwa-guidelines/only-render-in-component
     getSelectValueText(value) {
         const { selectOptions } = this.props;
         const foundOption = selectOptions.filter((option) => option.value.toString() === value.toString())[0];
@@ -53,7 +52,7 @@ export class MyAccountMyReturnsDropdownComponent extends PureComponent {
     render() {
         const { selectOptions } = this.props;
         const { selectValue, selectValueText } = this.state;
-        console.log('!!!', selectOptions);
+
         return (
             <Field
               id="order-to-return"

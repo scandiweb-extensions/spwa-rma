@@ -56,7 +56,8 @@ export class MyAccountMyReturnsContainer extends PureComponent {
     };
 
     state = {
-        activePage: this.getActivePage()
+        activePage: this.getActivePage(),
+        selectedOrderId: ''
     };
 
     renderMap = {
@@ -75,9 +76,9 @@ export class MyAccountMyReturnsContainer extends PureComponent {
     };
 
     containerFunctions = {
-        setChosenOrderId: this.setChosenOrderId.bind(this),
         handleReturnClick: this.handleReturnClick.bind(this),
-        handleReturnItemClick: this.handleReturnItemClick.bind(this)
+        handleReturnItemClick: this.handleReturnItemClick.bind(this),
+        handleDropdownChange: this.handleDropdownChange.bind(this)
     };
 
     componentDidMount() {
@@ -116,10 +117,6 @@ export class MyAccountMyReturnsContainer extends PureComponent {
         const { history: { location: { pathname } } } = this.props;
 
         return getActivePage(pathname);
-    }
-
-    setChosenOrderId(id) {
-        this.chosenOrderId = id;
     }
 
     handleFirstLoadHeaderChange() {
@@ -165,6 +162,10 @@ export class MyAccountMyReturnsContainer extends PureComponent {
         this.handlePageChange();
     }
 
+    handleDropdownChange(id) {
+        this.setState({ selectedOrderId: id });
+    }
+
     changeHeaderState() {
         const {
             changeHeaderState,
@@ -204,6 +205,7 @@ export class MyAccountMyReturnsContainer extends PureComponent {
         return (
             <Page
               { ...this.props }
+              { ...this.state }
               { ...this.containerFunctions }
               renderPageTitle={ this.renderPageTitle }
             />

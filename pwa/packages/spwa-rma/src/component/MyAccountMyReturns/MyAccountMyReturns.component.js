@@ -21,127 +21,113 @@ import './MyAccountMyReturns.style';
 
 /** @namespace SpwaRma/Component/MyAccountMyReturns/Component/MyAccountMyReturnsComponent */
 export class MyAccountMyReturnsComponent extends PureComponent {
-    static propTypes = {
-        handleReturnClick: PropTypes.func.isRequired,
-        handleReturnItemClick: PropTypes.func.isRequired,
-        returnList: PropTypes.array.isRequired,
-        areReturnsLoading: PropTypes.bool.isRequired,
-        renderPageTitle: PropTypes.func.isRequired
-    };
+     static propTypes = {
+         handleReturnClick: PropTypes.func.isRequired,
+         handleReturnItemClick: PropTypes.func.isRequired,
+         returnList: PropTypes.array.isRequired,
+         areReturnsLoading: PropTypes.bool.isRequired,
+         selectedOrderId: PropTypes.string.isRequired,
+         renderPageTitle: PropTypes.func.isRequired,
+         handleDropdownChange: PropTypes.func.isRequired
+     };
 
-    state = {
-        selectedOrderId: ''
-    };
+     renderNew() {
+         const { selectedOrderId, handleReturnClick, handleDropdownChange } = this.props;
+         return (
+             <div block="MyAccountMyReturns" elem="New">
+                 <p>{ __('Create new return request:') }</p>
+                 <div block="MyAccountMyReturns" elem="DropdownWrapper">
+                     <MyAccountMyReturnsDropdown
+                       { ...this.props }
+                       onSelectChange={ handleDropdownChange }
+                     />
+                     <button
+                       block="Button"
+                       onClick={ () => { handleReturnClick(selectedOrderId) } }
+                       disabled={ !selectedOrderId }
+                     >
+                         { __('Return') }
+                     </button>
+                 </div>
+             </div>
+         );
+     }
 
-    handleDropdownChange = (id) => {
-        this.setState({ selectedOrderId: id });
-    };
+     renderTable() {
+         const { returnList, areReturnsLoading } = this.props;
 
-    handleReturnClick = () => {
-        const { handleReturnClick } = this.props;
-        const { selectedOrderId } = this.state;
+         if (areReturnsLoading) {
+             return null;
+         }
 
-        handleReturnClick(selectedOrderId);
-    };
+         if (!areReturnsLoading && !returnList.length) {
+             return this.renderNoReturns();
+         }
 
-    renderNew() {
-        const { selectedOrderId } = this.state;
+         return (
+             <table block="MyAccountMyOrders" elem="Table">
+                 <thead>
+                 <tr>
+                     <th>{ __('Return #') }</th>
+                     <th block="hidden-mobile">{ __('Date') }</th>
+                     <th block="hidden-mobile">{ __('Ship From') }</th>
+                     <th>{ __('Return Status') }</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 { this.renderReturnsList() }
+                 </tbody>
+             </table>
+         );
+     }
 
-        return (
-            <div block="MyAccountMyReturns" elem="New">
-                <p>{ __('Create new return request:') }</p>
-                <div block="MyAccountMyReturns" elem="DropdownWrapper">
-                    <MyAccountMyReturnsDropdown
-                      { ...this.props }
-                      onSelectChange={ this.handleDropdownChange }
-                    />
-                    <button
-                      block="Button"
-                      onClick={ this.handleReturnClick }
-                      disabled={ !selectedOrderId }
-                    >
-                        { __('Return') }
-                    </button>
-                </div>
-            </div>
-        );
-    }
+     renderReturnRow = (row) => {
+         const { handleReturnItemClick } = this.props;
+         const { entity_id } = row;
 
-    renderTable() {
-        const { returnList, areReturnsLoading } = this.props;
+         return (
+             <MyAccountReturnTableRow
+               key={ entity_id }
+               row={ row }
+               /* eslint-disable-next-line react/jsx-no-bind */
+               onClick={ () => handleReturnItemClick(entity_id) }
+             />
+         );
+     };
 
-        if (areReturnsLoading) {
-            return null;
-        }
+     renderReturnsList() {
+         const { returnList } = this.props;
 
-        if (!areReturnsLoading && !returnList.length) {
-            return this.renderNoReturns();
-        }
+         const returns = returnList.length
+             ? returnList
+             : Array.from({ length: 10 }, (_, id) => ({ base_order_info: { id } }));
 
-        return (
-            <table block="MyAccountMyOrders" elem="Table">
-                <thead>
-                <tr>
-                    <th>{ __('Return #') }</th>
-                    <th block="hidden-mobile">{ __('Date') }</th>
-                    <th block="hidden-mobile">{ __('Ship From') }</th>
-                    <th>{ __('Return Status') }</th>
-                </tr>
-                </thead>
-                <tbody>
-                { this.renderReturnsList() }
-                </tbody>
-            </table>
-        );
-    }
+         return returns.reduceRight(
+             (acc, e) => [...acc, this.renderReturnRow(e)],
+             []
+         );
+     }
 
-    renderReturnRow = (row) => {
-        const { handleReturnItemClick } = this.props;
-        const { entity_id } = row;
+     renderNoReturns() {
+         return (
+             <div block="MyAccountMyReturns" elem="NoReturns">
+                 { __('You have no returns.') }
+             </div>
+         );
+     }
 
-        return (
-            <MyAccountReturnTableRow
-              key={ entity_id }
-              row={ row }
-              /* eslint-disable-next-line react/jsx-no-bind */
-              onClick={ () => handleReturnItemClick(entity_id) }
-            />
-        );
-    };
+     render() {
+         const { areReturnsLoading, renderPageTitle } = this.props;
 
-    renderReturnsList() {
-        const { returnList } = this.props;
-
-        const returns = returnList.length
-            ? returnList
-            : Array.from({ length: 10 }, (_, id) => ({ base_order_info: { id } }));
-
-        return returns.reduceRight(
-            (acc, e) => [...acc, this.renderReturnRow(e)],
-            []
-        );
-    }
-
-    renderNoReturns() {
-        return (
-            <div block="MyAccountMyReturns" elem="NoReturns">
-                { __('You have no returns.') }
-            </div>
-        );
-    }
-
-    render() {
-        const { areReturnsLoading, renderPageTitle } = this.props;
-
-        return (
-            <div block="MyAccountMyReturns">
-                { renderPageTitle() }
-                <Loader isLoading={ areReturnsLoading } />
-                { this.renderNew() }
-                { this.renderTable() }
-            </div>
-        );
-    }
+         return (
+             <div block="MyAccountMyReturns">
+                 { renderPageTitle() }
+                 <Loader isLoading={ areReturnsLoading } />
+                 { this.renderNew() }
+                 { this.renderTable() }
+             </div>
+         );
+     }
 }
 
 export default MyAccountMyReturnsComponent;

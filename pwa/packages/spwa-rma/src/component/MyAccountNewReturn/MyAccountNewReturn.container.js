@@ -12,6 +12,7 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+
 import OrderQuery from 'Query/Order.query';
 import { showNotification } from 'Store/Notification/Notification.action';
 import { OrderDispatcher } from 'Store/Order/Order.dispatcher';
@@ -48,11 +49,19 @@ export class MyAccountNewReturnContainer extends PureComponent {
         orderId: '',
         items: [],
         createdAt: '',
-        shippingAddress: null
+        shippingAddress: null,
+        selectedItems: {},
+        hasItemsError: false,
+        messageText: ''
     };
 
     containerFunctions = {
-        onNewRequestSubmit: this.onNewRequestSubmit.bind(this)
+        onNewRequestSubmit: this.onNewRequestSubmit.bind(this),
+        handleBackPress: this.handleBackPress.bind(this),
+        handleSelectedItemsChange: this.handleSelectedItemsChange.bind(this),
+        handleRequestSubmitPress: this.handleRequestSubmitPress.bind(this),
+        handleTextAreaChange: this.handleTextAreaChange.bind(this),
+        isButtonEnabled: this.isButtonEnabled.bind(this)
     };
 
     componentDidMount() {
@@ -125,6 +134,50 @@ export class MyAccountNewReturnContainer extends PureComponent {
             /** @namespace SpwaRma/Component/MyAccountNewReturn/Container/fetchQuery/then */
             (e) => showNotification('error', 'Error fetching New Return!', e)
         );
+    }
+
+    handleSelectedItemsChange(selectedItems) {
+        this.setState({ selectedItems });
+    }
+
+    async handleRequestSubmitPress() {
+        const { orderId, selectedItems, messageText } = this.state;
+
+        if (!Object.keys(selectedItems).length) {
+            return;
+        }
+
+        const isAllFilled = !Object.values(selectedItems).find((selectedItem) => (
+            Object.values(selectedItem).find((item) => !item) !== undefined
+        ));
+
+        if (!isAllFilled) {
+            this.setState({ hasItemsError: true });
+            return;
+        }
+
+        this.onNewRequestSubmit({
+            items: selectedItems,
+            order_id: orderId,
+            message: messageText
+        });
+    }
+
+    handleTextAreaChange(value) {
+        this.setState({ messageText: value });
+    }
+
+    isButtonEnabled() {
+        const { selectedItems } = this.state;
+        const isSubmitDisabled = !Object.keys(selectedItems).length;
+
+        return isSubmitDisabled;
+    }
+
+    handleBackPress() {
+        const { history } = this.props;
+
+        history.goBack();
     }
 
     render() {
