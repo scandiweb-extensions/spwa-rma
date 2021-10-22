@@ -1,5 +1,4 @@
 class MyAccountMyOrdersComponentPlugin {
-    // adds return header to the table
     renderOrderHeadingRow = (_args, _callback, _instance) => (
             <tr>
             <th>{ __('Order') }</th>

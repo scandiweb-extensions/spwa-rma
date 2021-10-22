@@ -15,9 +15,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 import Loader from 'Component/Loader';
-// FIX: from 'Store/Notification/'; TO : from 'Store/Notification/Notification.action';
 import { showNotification } from 'Store/Notification/Notification.action';
-// FIX: from 'Store/Order/'; TO : from 'Store/Order/Order.dispatcher';
 import { OrderDispatcher } from 'Store/Order/Order.dispatcher';
 import { fetchQuery } from 'Util/Request';
 

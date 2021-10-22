@@ -9,7 +9,6 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-// FIX: from 'Store/Notification/'; TO : from 'Store/Notification/Notification.action';
 import { showNotification } from 'Store/Notification/Notification.action';
 import { fetchMutation, fetchQuery } from 'Util/Request';
 

@@ -125,5 +125,4 @@ export class MyAccountReturnDetailsChatComponent extends PureComponent {
     }
 }
 
-// FIX: MyAccountReturnDetailsChat -> MyAccountReturnDetailsChatComponent
 export default MyAccountReturnDetailsChatComponent;

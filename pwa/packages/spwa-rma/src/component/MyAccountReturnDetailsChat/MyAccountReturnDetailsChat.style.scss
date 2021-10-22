@@ -18,8 +18,6 @@
         font-size: 17px;
         margin-top: 30px;
         margin-bottom: 20px;
-
-        //  FIX: after-mobile -> desktop
         @include desktop {
             font-size: 20px;
             margin-top: 45px;
@@ -29,8 +27,6 @@
     &-ContentWrapper {
         background-color: #f9f9f9;
         padding: 20px 10px 10px;
-
-        //  FIX: after-mobile -> desktop
         @include desktop {
             padding: 35px 25px 20px;
         }

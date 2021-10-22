@@ -12,12 +12,8 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-
-// FIX: {OrderQuery} to individual
 import OrderQuery from 'Query/Order.query';
-// FIX: from 'Store/Notification/'; TO : from 'Store/Notification/Notification.action';
 import { showNotification } from 'Store/Notification/Notification.action';
-// FIX: from 'Store/Order/'; TO : from 'Store/Order/Order.dispatcher';
 import { OrderDispatcher } from 'Store/Order/Order.dispatcher';
 import { customerType } from 'Type/Account';
 import { fetchMutation, fetchQuery } from 'Util/Request';

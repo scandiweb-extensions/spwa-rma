@@ -15,8 +15,6 @@
         font-weight: normal;
         line-height: 1;
         font-size: 17px;
-
-        //  FIX: before-desktop -> mobile
         @include mobile {
             margin-top: 20px;
         }
@@ -30,8 +28,6 @@
         display: flex;
         padding: 15px 0;
         border-bottom: solid 1px #ebebea;
-
-        //  FIX: before-desktop -> mobile
         @include mobile {
             flex-direction: column;
         }
@@ -44,8 +40,6 @@
     &-ItemInnerWrapper {
         display: flex;
         padding: 15px 0;
-
-        //  FIX: before-desktop -> mobile
         @include mobile {
             flex-direction: column;
         }
@@ -125,8 +119,7 @@
         margin-top: 5px;
 
         .Field-Select {
-            //  FIX: before-desktop -> mobile
-        @include mobile {
+            @include mobile {
                 font-size: var(--input-mobile-size);
             }
         }
@@ -158,8 +151,7 @@
             }
 
             button {
-                //  FIX: before-desktop -> mobile
-        @include mobile {
+                @include mobile {
                     width: unset;
                     font-size: 1.3rem;
                 }

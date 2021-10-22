@@ -31,8 +31,6 @@
 
     &-TextBlockWrapper {
         width: 90%;
-
-        //  FIX: after-mobile -> desktop
         @include desktop {
             width: 60%;
         }
@@ -75,8 +73,6 @@
         flex-direction: column;
         max-height: 300px;
         overflow: scroll;
-
-        //  FIX: after-mobile -> desktop
         @include desktop {
             max-height: 400px;
         }

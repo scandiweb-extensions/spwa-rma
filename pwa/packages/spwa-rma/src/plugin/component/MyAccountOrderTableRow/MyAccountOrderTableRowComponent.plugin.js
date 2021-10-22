@@ -4,7 +4,7 @@ import Html from 'Component/Html';
 import { formatPrice } from 'Util/Price';
 
 class MyAccountOrderTableRowComponentPlugin {
-    // adds return link to the table
+    // adds `return` link to each order row
     render = (_args, _callback, instance) => {
         const {
             base_order_info: {

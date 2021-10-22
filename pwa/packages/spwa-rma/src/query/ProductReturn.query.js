@@ -9,7 +9,6 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-// FIX: {OrderQuery,ProductListQuery} to individuals
 import OrderQuery from 'Query/Order.query';
 import ProductListQuery from 'Query/ProductList.query';
 import { Field } from 'Util/Query';

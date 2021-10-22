@@ -19,8 +19,6 @@
         flex: 1;
         flex-direction: column;
         font-size: 14px;
-
-        //  FIX: before-desktop -> mobile
         @include mobile {
             margin-bottom: 15px;
         }
@@ -29,8 +27,6 @@
     &-ReasonBlockStatus {
         font-weight: bold;
         flex: 1;
-
-        //  FIX: after-mobile -> desktop
         @include desktop {
             text-align: right;
             display: flex;
@@ -43,8 +39,6 @@
         align-self: self-start;
         flex-direction: column;
         flex: 1;
-
-        //  FIX: before-desktop -> mobile
         @include mobile {
             margin-bottom: 15px;
         }
@@ -70,9 +64,7 @@
         &-Content {
             flex-direction: column;
             padding-bottom: 0;
-
-            //  FIX: before-desktop -> mobile
-        @include mobile {
+            @include mobile {
                 align-items: flex-start;
             }
 
@@ -81,8 +73,7 @@
             }
 
             > * {
-                //  FIX: before-desktop -> mobile
-        @include mobile {
+                @include mobile {
                     max-height: max-content;
                 }
 
@@ -93,8 +84,7 @@
         }
 
         &-Picture {
-            //  FIX: after-mobile -> desktop
-        @include desktop {
+            @include desktop {
                 height: 160px;
             }
         }

@@ -9,7 +9,6 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-// FIX: container -> config
 import { MY_ACCOUNT_URL } from 'SourceRoute/MyAccount/MyAccount.config';
 import { DASHBOARD } from 'Type/Account';
 
@@ -26,13 +25,7 @@ export class MyAccountContainerPlugin {
      * @param originalMember
      * @returns {*}
      */
-    // aroundTabMap = (args, callback) => {
-    //     console.log('!!!', args, callback);
-    //     return {
-    //         ...args,
-    //         [MY_RETURNS]: this.returnTabMap
-    //     };
-    // }
+
     aroundTabMap = (originalMember) => ({
         ...originalMember,
         [MY_RETURNS]: this.returnTabMap

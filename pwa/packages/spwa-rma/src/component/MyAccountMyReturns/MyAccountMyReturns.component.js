@@ -24,7 +24,6 @@ export class MyAccountMyReturnsComponent extends PureComponent {
     static propTypes = {
         handleReturnClick: PropTypes.func.isRequired,
         handleReturnItemClick: PropTypes.func.isRequired,
-        // FIX: Array -> array
         returnList: PropTypes.array.isRequired,
         areReturnsLoading: PropTypes.bool.isRequired,
         renderPageTitle: PropTypes.func.isRequired

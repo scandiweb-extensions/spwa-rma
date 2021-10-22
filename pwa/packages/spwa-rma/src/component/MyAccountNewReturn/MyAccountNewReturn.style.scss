@@ -17,7 +17,6 @@
     &-CustomerAndAddressBlocks {
         display: flex;
 
-        //  FIX: before-desktop -> mobile
         @include mobile {
             flex-direction: column;
         }
@@ -31,8 +30,6 @@
 
     &-Actions {
         margin-top: 20px;
-
-        //  FIX: before-desktop -> mobile
         @include mobile {
             display: flex;
         }
@@ -46,9 +43,7 @@
 
             &:first-of-type {
                 margin-right: 10px;
-
-                //  FIX: before-desktop -> mobile
-        @include mobile {
+                @include mobile {
                     flex: 1
                 }
 
@@ -60,8 +55,7 @@
             }
 
             &:last-of-type {
-                //  FIX: before-desktop -> mobile
-        @include mobile {
+                @include mobile {
                     width: max-content;
                 }
             }
@@ -94,9 +88,7 @@
             font-size: var(--font-size);
             height: 120px;
             width: 100%;
-
-            //  FIX: after-mobile -> desktop
-        @include desktop {
+            @include desktop {
                 height: 150px;
             }
         }
@@ -117,8 +109,6 @@
 
     &-CustomerAndAddressBlocks {
         display: flex;
-
-        //  FIX: before-desktop -> mobile
         @include mobile {
             flex-direction: column;
         }
@@ -130,8 +120,7 @@
         }
 
         >:first-child {
-            //  FIX: before-desktop -> mobile
-        @include mobile {
+            @include mobile {
                 margin-bottom: 15px;
             }
 

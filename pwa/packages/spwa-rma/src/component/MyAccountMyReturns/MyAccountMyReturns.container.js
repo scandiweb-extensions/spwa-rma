@@ -15,9 +15,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import TextPlaceholder from 'Component/TextPlaceholder';
-// FIX: from import {OrderDispatcher} from 'Store/Order/'; TO : import OrderDispatcher from 'Store/Order/Order.dispatcher';
 import OrderDispatcher from 'SourceStore/Order/Order.dispatcher';
-// FIX: from 'Store/Navigation/'; TO : from 'Store/Navigation/Navigation.action';
 import { changeNavigationState } from 'Store/Navigation/Navigation.action';
 import { TOP_NAVIGATION_TYPE } from 'Store/Navigation/Navigation.reducer';
 import { ordersType } from 'Type/Account';

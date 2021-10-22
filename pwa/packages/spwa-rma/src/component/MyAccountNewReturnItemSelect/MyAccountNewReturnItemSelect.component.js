@@ -9,7 +9,6 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-// FIX: from .omit to /omit
 import omit from 'lodash/omit';
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
