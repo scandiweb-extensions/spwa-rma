@@ -92,7 +92,7 @@
              .catch(
                  /** @namespace SpwaRma/Component/MyAccountReturnDetailsChat/Container/sendComment/then/catch */
                  (e) => {
-                     showErrorNotification('error', `Error sending message: ${e[0].debugMessage}`);
+                     showErrorNotification('error', `Error sending message: ${e[0].debugMessage || 'Internal server error!'}`);
                      this.setState(() => ({ isChatLoading: false }));
                  }
              );
