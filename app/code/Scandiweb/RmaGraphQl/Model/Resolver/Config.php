@@ -12,17 +12,17 @@
 
 declare(strict_types=1);
 
-namespace ScandiPWA\RmaGraphQl\Model\Resolver;
+namespace Scandiweb\RmaGraphQl\Model\Resolver;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Rma\Helper\Data;
-use Magento\Framework\GraphQl\Query\ResolverInterface;
+use Magento\Rma\Helper\Eav;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\GraphQl\Query\ResolverInterface;
 
-class StatusCanBeReturned implements ResolverInterface
+class Config implements ResolverInterface
 {
     /**
      * @var StoreManagerInterface
@@ -30,23 +30,23 @@ class StatusCanBeReturned implements ResolverInterface
     protected $storeManager;
 
     /**
-     * @var Data
+     * @var Eav
      */
-    protected $dataHelper;
+    protected $rmaEav;
 
     /**
-     * StatusCanBeReturned constructor.
+     * Config constructor.
      *
      * @param StoreManagerInterface $storeManager
-     * @param Data $dataHelper
+     * @param Eav $rmaEav
      */
     public function __construct(
         StoreManagerInterface $storeManager,
-        Data $dataHelper
+        Eav $rmaEav
     )
     {
         $this->storeManager = $storeManager;
-        $this->dataHelper = $dataHelper;
+        $this->rmaEav = $rmaEav;
     }
 
     /**
@@ -56,7 +56,7 @@ class StatusCanBeReturned implements ResolverInterface
      * @param array|null $value
      * @param array|null $args
      *
-     * @return bool|Value|mixed
+     * @return array|Value|mixed
      */
     public function resolve(
         Field $field,
@@ -66,8 +66,28 @@ class StatusCanBeReturned implements ResolverInterface
         array $args = null
     )
     {
-        $orderId = $value['id'];
+        return [
+            'reasons' => $this->getReturnOptions('reason'),
+            'conditions' => $this->getReturnOptions('condition'),
+            'resolutions' => $this->getReturnOptions('resolution')
+        ];
+    }
 
-        return $this->dataHelper->canCreateRma($orderId);
+    /**
+     * @param $attribute
+     * @return array
+     */
+    protected function getReturnOptions($attribute)
+    {
+        $options = [];
+
+        foreach ($this->rmaEav->getAttributeOptionValues($attribute) as $key => $value) {
+            $options[] = [
+                'label' => $value,
+                'value' => $key
+            ];
+        }
+
+        return $options;
     }
 }

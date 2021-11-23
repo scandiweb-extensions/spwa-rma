@@ -10,14 +10,14 @@
 # */
 
 type Mutation {
-    createReturnRequest(input: CreateReturnInput!): CreateReturnOutput @resolver(class: "ScandiPWA\\RmaGraphQl\\Model\\Resolver\\CreateNewRequest")
-    sendRmaComment(input: SendRmaCommentInput!): ReturnCommentsType @resolver(class: "ScandiPWA\\RmaGraphQl\\Model\\Resolver\\SendRmaComment")
+    createReturnRequest(input: CreateReturnInput!): CreateReturnOutput @resolver(class: "Scandiweb\\RmaGraphQl\\Model\\Resolver\\CreateNewRequest")
+    sendRmaComment(input: SendRmaCommentInput!): ReturnCommentsType @resolver(class: "Scandiweb\\RmaGraphQl\\Model\\Resolver\\SendRmaComment")
 }
 
 type Query {
-    getRmaConfiguration : RmaConfiguration @resolver(class: "ScandiPWA\\RmaGraphQl\\Model\\Resolver\\Config")
-    getReturnList: [ReturnListEntry] @resolver(class: "ScandiPWA\\RmaGraphQl\\Model\\Resolver\\ReturnsForUser")
-    getReturnDetailsById(return_id: Int): ReturnDetails @resolver(class: "ScandiPWA\\RmaGraphQl\\Model\\Resolver\\ReturnDetails")
+    getRmaConfiguration : RmaConfiguration @resolver(class: "Scandiweb\\RmaGraphQl\\Model\\Resolver\\Config")
+    getReturnList: [ReturnListEntry] @resolver(class: "Scandiweb\\RmaGraphQl\\Model\\Resolver\\ReturnsForUser")
+    getReturnDetailsById(return_id: Int): ReturnDetails @resolver(class: "Scandiweb\\RmaGraphQl\\Model\\Resolver\\ReturnDetails")
 }
 
 type Order {
@@ -36,7 +36,7 @@ type BaseOrderInfo {
     increment_id: String
     created_at: String
     status: String
-    status_can_be_returned: Boolean @resolver(class: "ScandiPWA\\RmaGraphQl\\Model\\Resolver\\StatusCanBeReturned")
+    status_can_be_returned: Boolean @resolver(class: "Scandiweb\\RmaGraphQl\\Model\\Resolver\\StatusCanBeReturned")
     status_label: String
     grand_total: Float
     sub_total: Float

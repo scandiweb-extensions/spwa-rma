@@ -13,6 +13,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <type name="ScandiPWA\QuoteGraphQl\Model\Resolver\ProductResolver">
-        <plugin name="RmaProductResolverPlugin" type="ScandiPWA\RmaGraphQl\Plugin\ProductResolverPlugin"/>
+        <plugin name="RmaProductResolverPlugin" type="Scandiweb\RmaGraphQl\Plugin\ProductResolverPlugin"/>
     </type>
 </config>
