@@ -364,6 +364,7 @@ return [
         'ScandiPWA_WishlistGraphQl' => 1,
         'Scandiweb_BoltGraphQl' => 1,
         'ScandiPWA_SampleData' => 1,
+        'Scandiweb_RmaGraphQl' => 1,
         'ScandiPWA_SliderGraphQl' => 1,
         'Temando_ShippingRemover' => 1,
         'Vertex_Tax' => 1,

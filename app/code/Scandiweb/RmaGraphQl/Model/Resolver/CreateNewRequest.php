@@ -10,7 +10,7 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-namespace ScandiPWA\RmaGraphQl\Model\Resolver;
+namespace Scandiweb\RmaGraphQl\Model\Resolver;
 
 use Exception;
 use Magento\Framework\Exception\LocalizedException;

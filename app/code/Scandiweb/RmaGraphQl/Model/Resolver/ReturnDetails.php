@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace ScandiPWA\RmaGraphQl\Model\Resolver;
+namespace Scandiweb\RmaGraphQl\Model\Resolver;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Api\FilterBuilder;

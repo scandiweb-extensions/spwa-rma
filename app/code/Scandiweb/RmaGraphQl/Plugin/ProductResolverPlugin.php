@@ -12,7 +12,7 @@
 
 declare(strict_types=1);
 
-namespace ScandiPWA\RmaGraphQl\Plugin;
+namespace Scandiweb\RmaGraphQl\Plugin;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
