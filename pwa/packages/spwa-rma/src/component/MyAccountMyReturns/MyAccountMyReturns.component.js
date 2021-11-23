@@ -1,0 +1,133 @@
+/**
+ * ScandiPWA - Progressive Web App for Magento
+ *
+ * Copyright © Scandiweb, Inc. All rights reserved.
+ * See LICENSE for license details.
+ *
+ * @license OSL-3.0 (Open Software License ("OSL") v. 3.0)
+ * @package scandipwa/base-theme
+ * @link https://github.com/scandipwa/base-theme
+ */
+
+import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
+
+import Loader from 'Component/Loader';
+
+import MyAccountMyReturnsDropdown from '../MyAccountMyReturnsDropdown';
+import MyAccountReturnTableRow from '../MyAccountReturnTableRow';
+
+import './MyAccountMyReturns.style';
+
+/** @namespace SpwaRma/Component/MyAccountMyReturns/Component/MyAccountMyReturnsComponent */
+export class MyAccountMyReturnsComponent extends PureComponent {
+     static propTypes = {
+         handleReturnClick: PropTypes.func.isRequired,
+         handleReturnItemClick: PropTypes.func.isRequired,
+         returnList: PropTypes.array.isRequired,
+         areReturnsLoading: PropTypes.bool.isRequired,
+         selectedOrderId: PropTypes.string.isRequired,
+         renderPageTitle: PropTypes.func.isRequired,
+         handleDropdownChange: PropTypes.func.isRequired
+     };
+
+     renderNew() {
+         const { selectedOrderId, handleReturnClick, handleDropdownChange } = this.props;
+         return (
+             <div block="MyAccountMyReturns" elem="New">
+                 <p>{ __('Create new return request:') }</p>
+                 <div block="MyAccountMyReturns" elem="DropdownWrapper">
+                     <MyAccountMyReturnsDropdown
+                       { ...this.props }
+                       onSelectChange={ handleDropdownChange }
+                     />
+                     <button
+                       block="Button"
+                       onClick={ () => { handleReturnClick(selectedOrderId) } }
+                       disabled={ !selectedOrderId }
+                     >
+                         { __('Return') }
+                     </button>
+                 </div>
+             </div>
+         );
+     }
+
+     renderTable() {
+         const { returnList, areReturnsLoading } = this.props;
+
+         if (areReturnsLoading) {
+             return null;
+         }
+
+         if (!areReturnsLoading && !returnList.length) {
+             return this.renderNoReturns();
+         }
+
+         return (
+             <table block="MyAccountMyOrders" elem="Table">
+                 <thead>
+                 <tr>
+                     <th>{ __('Return #') }</th>
+                     <th block="hidden-mobile">{ __('Date') }</th>
+                     <th block="hidden-mobile">{ __('Ship From') }</th>
+                     <th>{ __('Return Status') }</th>
+                 </tr>
+                 </thead>
+                 <tbody>
+                 { this.renderReturnsList() }
+                 </tbody>
+             </table>
+         );
+     }
+
+     renderReturnRow = (row) => {
+         const { handleReturnItemClick } = this.props;
+         const { entity_id } = row;
+
+         return (
+             <MyAccountReturnTableRow
+               key={ entity_id }
+               row={ row }
+               /* eslint-disable-next-line react/jsx-no-bind */
+               onClick={ () => handleReturnItemClick(entity_id) }
+             />
+         );
+     };
+
+     renderReturnsList() {
+         const { returnList } = this.props;
+
+         const returns = returnList.length
+             ? returnList
+             : Array.from({ length: 10 }, (_, id) => ({ base_order_info: { id } }));
+
+         return returns.reduceRight(
+             (acc, e) => [...acc, this.renderReturnRow(e)],
+             []
+         );
+     }
+
+     renderNoReturns() {
+         return (
+             <div block="MyAccountMyReturns" elem="NoReturns">
+                 { __('You have no returns.') }
+             </div>
+         );
+     }
+
+     render() {
+         const { areReturnsLoading, renderPageTitle } = this.props;
+
+         return (
+             <div block="MyAccountMyReturns">
+                 { renderPageTitle() }
+                 <Loader isLoading={ areReturnsLoading } />
+                 { this.renderNew() }
+                 { this.renderTable() }
+             </div>
+         );
+     }
+}
+
+export default MyAccountMyReturnsComponent;
